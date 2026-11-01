@@ -1,0 +1,2 @@
+# Nombre de tu perfil de controles del juego (Opciones > Controles)
+ortem

@@ -1,0 +1,1 @@
+# Copia esto como inara_clave.txt junto a elite_sender.py y pega debajo tu clave de Inara (la misma de EDMC).

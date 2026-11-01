@@ -1,0 +1,138 @@
+HISTORIAL DEL PROYECTO - PANEL ELITE DANGEROUS (Raspberry Pi)
+CMDR ORTEM ED DER y Claude · del 28/10/2026 al 01/11/2026 · version actual v0.86
+=========================================================================
+
+1. QUE ES
+  Panel tactil (button box) para Elite Dangerous con una Raspberry Pi:
+  - Pantalla pequena tactil Kuman 3.5" 480x320 (SPI, XPT2046): botones que mandan teclas al PC
+    por USB (la Pi hace de teclado HID, /dev/hidg0) y pantallas con el estado del juego.
+  - Pantalla grande HDMI 1024x600 (sin tactil): tablero de 4 cuadros que cambia segun la situacion
+    (VIAJE, APROXIMACION, SUPERFICIE, ATRACADO, COMBATE, COMBATE A PIE) o la HDMI en modo PANEL.
+  - En el PC de juego, elite_sender.py lee el journal, Status.json, Cargo, Backpack, Market... y lo manda a la Pi
+    por UDP 5005 (comprimido). La Pi lo dibuja con pygame directamente en los framebuffers.
+
+2. EQUIPOS
+  - Ortem: Raspberry Pi 4 (4 GB) "PI4ELITE", 192.168.0.94, usuario ortem, Raspberry Pi OS Lite 64 bits.
+    Servicio elite-panel. HDMI = fb0, pequena = fb1. La HDMI se alimenta aparte (habia baja tension).
+    PC de juego: i9-10900K / 3080 Ti, acelerador ThrustMaster Warthog. Usa EDMC (sube a Inara).
+  - KORZO: Raspberry Pi 3B+, 192.168.1.151, equipo y usuario "elite", OS Lite, solo HDMI
+    (Waveshare 7" HDMI Display-C: el tactil no responde, se maneja con raton y teclado).
+
+3. REGLAS Y PREFERENCIAS
+  - Respuestas cortas y en espanol.
+  - Cada novedad: version nueva v0.NN, linea en VERSIONES (lista CHANGES) y copia panel.py.bakNN.
+  - Arreglos de la version recien entregada: misma version con letra (v0.86b...).
+  - La CPU importa mucho: lo extra se puede activar y desactivar.
+  - KORZO recibe siempre el panel.py completo (carpeta pi3_korzo), no parches.
+  - La v1.0 sera "universal": un solo panel.py con config.json, cualquier resolucion y Windows 11.
+
+4. COSAS QUE EL JUEGO NO DA (no se pueden detectar)
+  - Bateria del traje y municion de las armas.
+  - Bajas a pie dentro de la nave de carga en Operations.
+  - Modelo de nave en tripulacion multiple, taxi o transporte.
+  - Nombre del rango de escuadron (se saca de Inara).
+  - Al morir y reaparecer, el juego pone la musica del menu en la pantalla de carga (corregido en v0.86).
+
+5. DATOS UTILES
+  - Explosivos por traje (comprobado): Dominator 3/3/2, Maverick 2/1/1, Artemis 1/1/1, Vuelo 0
+    (fragmentacion / disruptor EMP / proyector de escudo).
+  - Plataformas de estaciones: 45, en 3 bloques de 15; tabla de hora y profundidad del plugin LandingPad (EDMC).
+  - Inara: solo lectura con la clave de EDMC (inara_clave.txt junto al sender).
+  - Teclas: el sender lee el .binds del perfil "ortem" (teclas_preset.txt).
+
+6. VERSIONES (lista que sale en el panel: AJUSTES > VERSIONES)
+ base  Panel de 12 botones, teclado USB y estado del juego por red
+ base  7.3 Xenobiología: muestras, distancia, valor de especies y x5
+ base  Recogida de combustible en naranja y sobrecalentamiento
+ base  Brújula para volver a la nave
+ base  EN VIVO como inicio (nave/a pie/SRV) con botón MENÚ
+ base  7.1 Exploración con EDSM y páginas
+ base  Avisos: combustible en ruta, neutrones y gravedad
+ base  12.5 Materiales, 12.6 Portanaves y 12.7 Mercado
+ 0.10  Versión en la pantalla del reloj
+ 0.11  12.8 Notas de viaje con brújula al destino
+ 0.12  Foto del CMDR en reloj y arranque
+ 0.13  Estilo CABINA (botón ESTILO en Sesión)
+ 0.14  Botón ESTILO más grande
+ 0.15  Pantalla grande HDMI: tablero de 4 cuadros
+ 0.16  Viaje con SISTEMA y Combate con PIPS
+ 0.17  Aproximación/Superficie y 7.4 Yacimientos
+ 0.18  Tablero especial con el Rhino
+ 0.19  Bodega del vehículo
+ 0.20  Ficha del destino en Navegación
+ 0.21  Altitud para desplegar el Rhino
+ 0.22  RHINO en la pantalla 5
+ 0.23  Pantalla 5: SRV / RHINO / A PIE
+ 0.24  Lista de minerales de la bodega del Rhino
+ 0.25  Combustible y escudos del Rhino
+ 0.26  Superficie con Materiales y Minería
+ 0.27  Minería en modo Rhino
+ 0.28  Avisos de nave (el juego no los registra)
+ 0.29  RHINO A BORDO
+ 0.30  Franja RHINO PREPARADO
+ 0.31  Franja de altura: 100-41 / 40-7 / <7 m
+ 0.32  Brújula a puertos planetarios
+ 0.33  Tablero ATRAQUE con la plataforma
+ 0.34  Navegación: cara SISTEMA (política)
+ 0.35  Estación: ficha y facciones a los 15 s
+ 0.36  12.4 Salir, reiniciar y apagar
+ 0.37  Navegación: cara POWERPLAY
+ 0.38  Grande: 10 s sistema y 5 s Powerplay
+ 0.39  Estación alterna ficha y Powerplay
+ 0.40  Hallazgos, Códice, buscados, misiones, fin de sesión
+ 0.41  A pie: peligros, mochila, asentamientos, delitos, taxi
+ 0.42  Combate: escudos, derribos, bonos, rebuy, PvP
+ 0.43  Ficha de llegada y sistema sin explorar
+ 0.44  Esta lista de versiones
+ 0.45  Estilo CABINA también en la pantalla grande
+ 0.46  Bordes de situación por riesgo y botón BORDES
+ 0.47  IP de la Pi en la pantalla del reloj
+ 0.48  Brújula NAVE: corrección automática y botón NAVE AQUÍ
+ 0.49  Menú principal con iconos (botón ICONOS)
+ 0.50  Exploración: escaneo, ruta, diario 7.5, riesgo y distancias
+ 0.51  7.6 Alienígenas: thargoides y guardianes, señales y guerra
+ 0.52  Amigos y ala: avisos y cara AMIGOS en Sesión
+ 0.53  12.9 GALNET: noticias oficiales y aviso de noticia nueva
+ 0.54  Reloj: foto arriba y noticias GALNET subiendo
+ 0.55  Pantalla grande ATRACADO: GALNET y carga/misión; fecha del juego
+ 0.56  12.10 Objetivos comunitarios (web y los tuyos)
+ 0.57  SALIR: shell en la HDMI y aviso en la pequeña
+ 0.58  12 AJUSTES a la vista, pestañas de información y engranaje
+ 0.59  Optimización de pantallas y aviso de BAJA TENSIÓN
+ 0.60  Datos comprimidos, registro de errores, arranque y aviso thargoide
+ 0.61  Pantalla grande: cuadros a todo lo ancho, texto más grande
+ 0.62  Pantalla grande: modos 4 CUADROS, MIXTO y GRANDE (AJUSTES)
+ 0.63  EMITIR pantallas por la red (PC, OBS, VR) y VOZ de la nave
+ 0.64  Voz y pitidos en el PC: página /voz y en EMITIR
+ 0.65  MANUAL de uso en AJUSTES y en http://IP:8080/manual
+ 0.66  Bajas a pie y derribos con contador, bonos sin cobrar, zona de combate y luces del atraque
+ 0.67  EN COMBATE a pie (grande en 2 cuadros) y salud baja al 75/50/25 %
+ 0.68  MAPA de recorrido a pie, SRV y Rhino
+ 0.69  Botiquines y células en avisos y MAPA, MARCAR RECARGA, HAS CAÍDO y COBRADO
+ 0.70  Ratón y teclado; la HDMI puede mostrar el PANEL (TAB o clic derecho)
+ 0.71  Llegada y señales, OPERATIONS, Merc Coin, copiloto, SISTEMA grande y clic desde el PC
+ 0.72  NITIDEZ ALTA: pantalla grande a 1024x600 real (AJUSTES > PANTALLA)
+ 0.73  ALERTAS y CAMBIO AUTO uno a uno (OPCIONES); NITIDEZ ALTA por defecto
+ 0.74  Merc Coin rosa, PANEL nítido, teclas en la web, FPS, fecha del juego, plataforma exacta
+ 0.75  SONIDO Y VOZ uno a uno (bajas en silencio); te atacan a pie > EN VIVO; mapa ZONA
+ 0.76  Mapa a pie sin el vuelo del transporte, leyenda de símbolos y más zoom en ZONA
+ 0.77  Teclas del juego (.binds), indicador de CPU/temperatura/FPS y modo PANEL ligero
+ 0.78  Arreglo: el mapa a pie vuelve a dibujar el recorrido
+ 0.79  Enlace energético: parado 8 s = RECARGANDO y punto de recarga en el mapa
+ 0.80  Menú principal, música de combate y thargoide, Powerplay y ficha ESCUADRÓN
+ 0.81  Inara (solo lectura): nombre de tu rango de escuadrón y otros CMDR en ESCUADRÓN
+ 0.82  ESCUADRÓN por páginas: hasta 30 comandantes, conectados primero
+ 0.83  Botiquines, células y explosivos (máximo por traje) siempre a la vista; EN COMBATE en grande
+ 0.84  Cierre de emergencia del juego, ESCUADRÓN en AMIGOS, MENÚ PRINCIPAL en verde y arreglos
+ 0.85  Cierre de emergencia: zona más grande en la barra de arriba y aviso de toques 1/3, 2/3
+ 0.86  Salud < 30 %: pantalla roja; cierre en 3 s; copiloto en azul; arreglo del falso MENÚ PRINCIPAL al morir
+7. PENDIENTE
+  - Manual nuevo completo (panel, web /manual y documento con capturas).
+  - Dibujos de las naves.
+  - KORZO: tactil y sonido.
+  - Comprobar en Backpack.json el aviso de granada lanzada.
+  - v1.0 universal y version para Windows 11.
+
+8. CARPETA subidos/
+  Lo que Ortem subio durante el desarrollo: sus controles (ortem.4.2.binds), journals de Operations y de
+  combate a pie, Market/Outfitting, versiones antiguas del panel y del sender, y fotos de las pantallas.

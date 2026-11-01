@@ -1,0 +1,5 @@
+# claves y datos privados: nunca al repositorio
+inara_clave.txt
+*.bak*
+__pycache__/
+*.pyc

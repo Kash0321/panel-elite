@@ -1,0 +1,29 @@
+PANEL ELITE DANGEROUS - Raspberry Pi            version v0.86  (01/11/2026)
+Creador: CMDR ORTEM ED DER (ortemedder@gmail.com) y Claude
+=========================================================================
+
+CARPETAS
+  pi4_ortem/panel.py      Panel completo v0.86 de Ortem (Pi 4 "PI4ELITE", 192.168.0.94, usuario ortem)
+                          -> copiar a /home/ortem/panel.py y: sudo systemctl restart elite-panel
+  pi3_korzo/              Panel completo v0.86 de KORZO (Pi 3, 192.168.1.151, usuario elite),
+                          su foto cmdr.jpg e instalar_pi3.sh (instalacion desde cero)
+  pc/elite_sender.py      Sender del PC de juego (lee el journal y manda los datos a la Pi por UDP 5005)
+                          PI_IP = 192.168.0.94 (Ortem). Para KORZO cambiar a 192.168.1.151
+  pc/control_sender.pyw   Ventana de Windows para INICIAR / PARAR el sender
+  pc/teclas_preset.txt    Nombre del perfil de controles del juego (ortem)
+  pc/inara_clave.txt      Tu clave de Inara (la misma de EDMC) -> pegarla tu, no compartir
+  pc/inara_cmdrs.txt      Comandantes del escuadron para ver en ESCUADRON (hasta 30)
+  parches/                Todos los parches, por si hay que rehacer una version paso a paso
+
+REGLAS DEL PROYECTO
+  - Cada novedad sube la version (v0.87, v0.88...), con su linea en VERSIONES y copia panel.py.bakNN.
+  - Los arreglos de la version recien entregada llevan letra (v0.86b, v0.86c...).
+  - El consumo de CPU importa: lo extra se puede activar y desactivar.
+  - Volver atras: cp ~/panel.py.bakNN ~/panel.py && sudo systemctl restart elite-panel
+
+PENDIENTE
+  - Manual nuevo completo (panel, web /manual y documento con capturas).
+  - Nombre de los rangos de escuadron (ya sale el nombre real con Inara).
+  - Dibujos de las naves.
+  - KORZO: tactil Waveshare 7" y sonido.
+  - v1.0 universal: un solo panel.py con config.json, cualquier resolucion y Windows 11.

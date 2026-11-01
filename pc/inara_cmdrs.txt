@@ -1,0 +1,2 @@
+# Otros comandantes para ver en ESCUADRON (uno por linea)
+KORZO
