@@ -4268,9 +4268,9 @@ def power_box(surf, r):
         put(surf, F["small"], sub, (r.centerx, r.bottom - 22), DIM, r.w - 8, anchor="midtop")
 
 
-# ---------- registro de errores: /tmp/claude-0/s/t53/panel.log y pantalla LOG ----------
+# ---------- registro de errores: /home/ortem/panel.log y pantalla LOG ----------
 import builtins, traceback, os as _os
-PANEL_LOG = "/tmp/claude-0/s/t53/panel.log"
+PANEL_LOG = "/home/ortem/panel.log"
 _err_seen = {}
 
 def plog(*a, **k):

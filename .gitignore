@@ -3,3 +3,16 @@ inara_clave.txt
 *.bak*
 __pycache__/
 *.pyc
+
+# registros y entornos locales
+panel.log
+panel.log.[0-9]
+.venv/
+.env
+
+# sistema y editores
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
